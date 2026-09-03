@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Celebrity Hotseat // Past of BE Game</title>
+    <style>
+        :root {
+            --bg-base: #0a0c10;
+            --card-bg: rgba(18, 22, 31, 0.85);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --accent-green: #38ef7d;
+            --accent-cyan: #00f2fe;
+            --accent-blue: #4facfe;
+            --accent-yellow: #f9d423;
+            --accent-orange: #ff8c00;
+            --accent-red: #ff3366;
+            --text-main: #f0f4fc;
+            --text-sub: #94a3b8;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Consolas', 'Courier New', monospace;
+            background-color: var(--bg-base);
+            background-image: 
+                radial-gradient(circle at 15% 20%, rgba(79, 172, 254, 0.12), transparent 45%),
+                radial-gradient(circle at 85% 80%, rgba(56, 239, 125, 0.08), transparent 45%),
+                linear-gradient(180deg, #090b10 0%, #0d1117 100%);
+            background-attachment: fixed;
+            color: var(--text-main);
+            padding: 20px 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+        }
+
+        .back-nav {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--accent-cyan);
+            text-decoration: none;
+            font-size: 9pt;
+            font-weight: bold;
+            margin-bottom: 14px;
+            padding: 5px 10px;
+            border-radius: 4px;
+            background: rgba(0, 242, 254, 0.08);
+            border: 1px solid rgba(0, 242, 254, 0.2);
+            transition: all 0.2s ease;
+        }
+        .back-nav:hover { 
+            background: rgba(0, 242, 254, 0.18);
+            box-shadow: 0 0 10px rgba(0, 242, 254, 0.3);
+            transform: translateX(-3px);
+        }
+
+        header {
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 16px;
+            margin-bottom: 22px;
+        }
+
+        h1 { 
+            color: #fff;
+            font-size: 21pt; 
+            letter-spacing: 1.5px;
+            text-shadow: 0 0 20px rgba(79, 172, 254, 0.6);
+            margin-bottom: 6px; 
+        }
+        .sub { color: var(--accent-cyan); font-size: 9pt; font-style: italic; letter-spacing: 0.5px; }
+
+        .card {
+            background-color: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+        }
+
+        .rules-bar {
+            background: rgba(249, 212, 35, 0.05);
+            border-left: 4px solid var(--accent-yellow);
+            border-top: 1px solid rgba(249, 212, 35, 0.1);
+            border-bottom: 1px solid rgba(249, 212, 35, 0.1);
+            border-right: 1px solid rgba(249, 212, 35, 0.1);
+            border-radius: 6px;
+            padding: 12px 16px;
+            font-size: 9pt;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            box-shadow: 0 0 15px rgba(249, 212, 35, 0.05);
+        }
+
+        /* Dash Counters with Visual Badges */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 14px;
+            margin-bottom: 20px;
+        }
+
+        .stat-box {
+            background: rgba(14, 18, 27, 0.9);
+            border: 1px solid var(--card-border);
+            padding: 14px 10px;
+            border-radius: 10px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .stat-box::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--accent-cyan), transparent);
+            opacity: 0.4;
+        }
+
+        .stat-label { font-size: 8pt; color: var(--text-sub); text-transform: uppercase; letter-spacing: 1px; font-weight: bold; }
+        
+        .stat-val { 
+            font-size: 20pt; 
+            font-weight: 800; 
+            color: var(--accent-green); 
+            margin-top: 6px;
+            text-shadow: 0 0 12px rgba(56, 239, 125, 0.3);
+            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: inline-block;
+        }
+
+        /* Pulse Trigger Animation */
+        .stat-pulse {
+            transform: scale(1.35) !important;
+            filter: drop-shadow(0 0 16px currentColor);
+        }
+
+        /* Celebrity Showcase Display */
+        .celebrity-card {
+            background: radial-gradient(circle at center, rgba(32, 41, 58, 0.6) 0%, rgba(10, 13, 20, 0.9) 100%);
+            border: 1px dashed var(--accent-blue);
+            border-radius: 10px;
+            padding: 24px;
+            text-align: center;
+            margin-bottom: 20px;
+            box-shadow: inset 0 0 30px rgba(79, 172, 254, 0.1);
+        }
+
+        .celebrity-name {
+            font-size: 26pt;
+            color: #fff;
+            font-weight: 800;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+            text-shadow: 0 0 25px rgba(255, 255, 255, 0.5), 0 0 10px var(--accent-yellow);
+        }
+
+        .celebrity-category {
+            font-size: 9.5pt;
+            color: var(--accent-orange);
+            font-weight: bold;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        /* Audience Clues Grid */
+        .clues-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 15px;
+            text-align: left;
+        }
+
+        .clue-item {
+            background: rgba(14, 18, 27, 0.85);
+            border: 1px solid var(--card-border);
+            border-left: 3px solid var(--accent-cyan);
+            padding: 10px 12px;
+            border-radius: 6px;
+            font-size: 8.5pt;
+            line-height: 1.5;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+        .clue-item:hover {
+            transform: translateX(3px);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .clue-item strong { color: var(--accent-cyan); font-weight: bold; }
+
+        /* Action Buttons with Modern Neon Glow Effects */
+        .action-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .btn {
+            background: #19202e;
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            padding: 11px 16px;
+            font-family: inherit;
+            font-weight: 700;
+            font-size: 8.5pt;
+            border-radius: 6px;
+            cursor: pointer;
+            letter-spacing: 0.5px;
+            transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            user-select: none;
+        }
+
+        /* Micro-interaction Highlight on Click */
+        .btn:active {
+            transform: scale(0.95);
+        }
+
+        .btn-green {
+            background: linear-gradient(135deg, rgba(56, 239, 125, 0.2) 0%, rgba(17, 153, 142, 0.2) 100%);
+            border-color: var(--accent-green);
+            color: #fff;
+        }
+        .btn-green:hover {
+            background: var(--accent-green);
+            color: #05140b;
+            box-shadow: 0 0 20px rgba(56, 239, 125, 0.6);
+            transform: translateY(-2px);
+        }
+
+        .btn-orange {
+            background: linear-gradient(135deg, rgba(255, 140, 0, 0.2) 0%, rgba(249, 212, 35, 0.2) 100%);
+            border-color: var(--accent-orange);
+            color: #fff;
+        }
+        .btn-orange:hover {
+            background: var(--accent-orange);
+            color: #1a0800;
+            box-shadow: 0 0 20px rgba(255, 140, 0, 0.6);
+            transform: translateY(-2px);
+        }
+
+        .btn-red {
+            background: linear-gradient(135deg, rgba(255, 51, 102, 0.2) 0%, rgba(200, 16, 46, 0.2) 100%);
+            border-color: var(--accent-red);
+            color: #fff;
+        }
+        .btn-red:hover {
+            background: var(--accent-red);
+            color: #fff;
+            box-shadow: 0 0 20px rgba(255, 51, 102, 0.6);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.2);
+            color: var(--text-main);
+        }
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: #fff;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+        }
+
+        .btn-next {
+            background: linear-gradient(135deg, var(--accent-cyan) 0%, var(--accent-blue) 100%);
+            color: #051329;
+            border: none;
+            font-weight: 800;
+        }
+        .btn-next:hover {
+            box-shadow: 0 0 25px rgba(0, 242, 254, 0.7);
+            transform: translateY(-2px);
+            filter: brightness(1.1);
+        }
+
+        /* Privacy Blind View */
+        .hidden-blind {
+            display: none;
+            background: rgba(14, 18, 27, 0.95);
+            border: 2px solid var(--accent-red);
+            border-radius: 10px;
+            padding: 35px 20px;
+            text-align: center;
+            margin-bottom: 20px;
+            box-shadow: 0 0 35px rgba(255, 51, 102, 0.2);
+        }
+
+        @media (max-width: 650px) {
+            .clues-grid { grid-template-columns: 1fr; }
+            .celebrity-name { font-size: 20pt; }
+            .dashboard-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <a href="index.html" class="back-nav">⬅ Back to Main Hub</a>
+
+    <header>
+        <h1>CELEBRITY HOTSEAT: PAST OF "BE"</h1>
+        <div class="sub">Audience Clue Feed & Hotseat Tracker · SENA ADSO</div>
+        <div class="sub">Cesar Peña, English Instructor</div>
+    </header>
+
+    <div class="rules-bar">
+        • <strong>Hotseat Student:</strong> Ask up to 15 Yes/No questions using <em>"Was I...?"</em> or <em>"Were my...?"</em><br>
+        • <strong>Classmates/Audience:</strong> Answer strictly using <em>"Yes, you were" / "No, you weren't" / "Yes, it was" / "No, it wasn't"</em> using the data below.<br>
+        • <strong>Rule:</strong> No action verbs allowed! Only verbs of state, identity, location, and traits.
+    </div>
+
+    <div class="dashboard-grid">
+        <div class="stat-box" id="box-qCount">
+            <div class="stat-label">Questions Used</div>
+            <div class="stat-val" id="qCount">0 / 15</div>
+        </div>
+        <div class="stat-box" id="box-guessCount">
+            <div class="stat-label">Guesses Left</div>
+            <div class="stat-val" id="guessCount" style="color: var(--accent-orange);">3</div>
+        </div>
+        <div class="stat-box" id="box-timer">
+            <div class="stat-label">Round Timer</div>
+            <div class="stat-val" id="timer" style="color: var(--accent-cyan);">10:00</div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div id="audienceView">
+            <div class="celebrity-card">
+                <div class="celebrity-category" id="celebField">CATEGORY: COMPUTING PIONEER</div>
+                <div class="celebrity-name" id="celebName">Ada Lovelace</div>
+                <div style="font-size: 8pt; color: var(--text-sub);">(Keep this hidden from the person in the hot seat!)</div>
+            </div>
+
+            <h3 style="color: var(--accent-yellow); font-size: 9pt; letter-spacing: 1px; margin-bottom: 8px;">// VERIFIED CLUES FOR AUDIENCE / CLASSMATES:</h3>
+            <div class="clues-grid" id="cluesContainer"></div>
+        </div>
+
+        <div class="hidden-blind" id="blindView">
+            <h2 style="color: var(--accent-red); font-size: 18pt; margin-bottom: 8px; text-shadow: 0 0 15px rgba(255, 51, 102, 0.4);">🔒 IDENTITY CONCEALED</h2>
+            <p style="font-size: 9pt; color: var(--text-sub);">The audience can see your clues. Ask your Yes/No question starting with:</p>
+            <div style="color: var(--accent-yellow); font-size: 13pt; margin-top: 12px; font-weight: bold; letter-spacing: 1px;">
+                "Was I...?" &nbsp;|&nbsp; "Were my...?"
+            </div>
+        </div>
+
+        <div class="action-row">
+            <button class="btn btn-outline" onclick="togglePrivacy()">👁️ TOGGLE PRIVACY BLIND</button>
+            <button class="btn btn-green" onclick="addQuestion()">+1 QUESTION ASKED</button>
+            <button class="btn btn-orange" onclick="useGuess()">USE GUESS ATTEMPT</button>
+            <button class="btn btn-red" onclick="restartTimer()">RESET TIMER ⏱️</button>
+            <button class="btn btn-next" onclick="nextCelebrity()">NEXT CELEBRITY ➔</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    const celebrityDatabase = [
+        {
+            name: "Ada Lovelace",
+            field: "Computing Pioneer / Mathematics",
+            clues: [
+                { title: "Era & Century", desc: "She was active in the 19th century (1815–1852)." },
+                { title: "Nationality", desc: "She was British (from London, England)." },
+                { title: "Profession", desc: "She was a mathematician and writer." },
+                { title: "Key Claim", desc: "She was the world's first computer programmer." }
+            ]
+        },
+        {
+            name: "Alan Turing",
+            field: "Computer Science / Cryptography",
+            clues: [
+                { title: "Era & Century", desc: "He was alive during the 20th century (World War II)." },
+                { title: "Nationality", desc: "He was British." },
+                { title: "Profession", desc: "He was a mathematician, logician, and cryptanalyst." },
+                { title: "Key Claim", desc: "His machine was key to breaking the Enigma code." }
+            ]
+        },
+        {
+            name: "Steve Jobs",
+            field: "Tech Entrepreneurship",
+            clues: [
+                { title: "Era & Century", desc: "He was alive in the late 20th and early 21st century." },
+                { title: "Nationality", desc: "He was American (from California)." },
+                { title: "Profession", desc: "He was a tech executive, designer, and inventor." },
+                { title: "Key Claim", desc: "He was the co-founder and iconic CEO of Apple." }
+            ]
+        },
+        {
+            name: "Nikola Tesla",
+            field: "Electrical Engineering / Invention",
+            clues: [
+                { title: "Era & Century", desc: "He was active in the late 19th and early 20th century." },
+                { title: "Nationality", desc: "He was Serbian-American." },
+                { title: "Profession", desc: "He was an inventor and electrical engineer." },
+                { title: "Key Claim", desc: "His invention was Alternating Current (AC) electricity." }
+            ]
+        },
+        {
+            name: "Albert Einstein",
+            field: "Theoretical Physics",
+            clues: [
+                { title: "Era & Century", desc: "He was alive during the 20th century." },
+                { title: "Nationality", desc: "He was German-born (later American)." },
+                { title: "Profession", desc: "He was a theoretical physicist." },
+                { title: "Key Claim", desc: "His most famous work was the Theory of Relativity." }
+            ]
+        },
+        {
+            name: "Marie Curie",
+            field: "Chemistry & Physics",
+            clues: [
+                { title: "Era & Century", desc: "She was active in the late 19th and early 20th century." },
+                { title: "Nationality", desc: "She was Polish and French." },
+                { title: "Profession", desc: "She was a scientist (physicist and chemist)." },
+                { title: "Key Claim", desc: "She was the first woman to win a Nobel Prize (she had two)." }
+            ]
+        },
+        {
+            name: "Frida Kahlo",
+            field: "Visual Arts / Painting",
+            clues: [
+                { title: "Era & Century", desc: "She was alive in the 20th century (1907–1954)." },
+                { title: "Nationality", desc: "She was Mexican (from Coyoacán, Mexico City)." },
+                { title: "Profession", desc: "She was a painter and cultural icon." },
+                { title: "Key Claim", desc: "Her famous artworks were surreal self-portraits." }
+            ]
+        },
+        {
+            name: "Freddie Mercury",
+            field: "Music / Rock Legend",
+            clues: [
+                { title: "Era & Century", desc: "He was active in the 1970s and 1980s." },
+                { title: "Nationality", desc: "He was British (born in Zanzibar)." },
+                { title: "Profession", desc: "He was a singer, songwriter, and pianist." },
+                { title: "Key Claim", desc: "He was the legendary lead singer of Queen." }
+            ]
+        },
+        {
+            name: "Pelé",
+            field: "World Sports / Football",
+            clues: [
+                { title: "Era & Century", desc: "He was active from 1956 through the 1970s." },
+                { title: "Nationality", desc: "He was Brazilian." },
+                { title: "Profession", desc: "He was a professional soccer player." },
+                { title: "Key Claim", desc: "He was a 3-time FIFA World Cup champion (shirt #10)." }
+            ]
+        },
+        {
+            name: "Cleopatra",
+            field: "Ancient World History",
+            clues: [
+                { title: "Era & Century", desc: "She was alive in the 1st century BC (Ancient era)." },
+                { title: "Geography", desc: "Her kingdom was Egypt (Alexandria)." },
+                { title: "Profession", desc: "She was the queen and ruler of the Ptolemaic Kingdom." },
+                { title: "Key Claim", desc: "Her allies were Julius Caesar and Mark Antony." }
+            ]
+        }
+    ];
+
+    let currentIdx = 0;
+    let questionsAsked = 0;
+    let guessesLeft = 3;
+    let timerSeconds = 180;
+    let timerInterval = null;
+    let isBlindActive = false;
+
+    function triggerPulse(elementId) {
+        const el = document.getElementById(elementId);
+        el.classList.remove('stat-pulse');
+        void el.offsetWidth; // Reflow trigger
+        el.classList.add('stat-pulse');
+        setTimeout(() => el.classList.remove('stat-pulse'), 250);
+    }
+
+    function initGame() {
+        shuffle(celebrityDatabase);
+        loadCelebrity(0);
+        restartTimer();
+    }
+
+    function shuffle(arr) {
+        for (let i = arr.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+    }
+
+    function loadCelebrity(index) {
+        const celeb = celebrityDatabase[index];
+        document.getElementById('celebName').innerText = celeb.name;
+        document.getElementById('celebField').innerText = `CATEGORY: ${celeb.field}`;
+
+        const cluesContainer = document.getElementById('cluesContainer');
+        cluesContainer.innerHTML = celeb.clues.map(c => `
+            <div class="clue-item">
+                <strong>// ${c.title}:</strong><br>${c.desc}
+            </div>
+        `).join('');
+
+        questionsAsked = 0;
+        guessesLeft = 3;
+        
+        const qEl = document.getElementById('qCount');
+        qEl.innerText = `${questionsAsked} / 15`;
+        qEl.style.color = "var(--accent-green)";
+
+        const gEl = document.getElementById('guessCount');
+        gEl.innerText = guessesLeft;
+        gEl.style.color = "var(--accent-orange)";
+    }
+
+    function nextCelebrity() {
+        currentIdx = (currentIdx + 1) % celebrityDatabase.length;
+        if (isBlindActive) togglePrivacy();
+        loadCelebrity(currentIdx);
+        restartTimer();
+    }
+
+    function addQuestion() {
+        if (questionsAsked < 15) {
+            questionsAsked++;
+            const qEl = document.getElementById('qCount');
+            qEl.innerText = `${questionsAsked} / 15`;
+            triggerPulse('qCount');
+
+            if (questionsAsked >= 12) {
+                qEl.style.color = "var(--accent-red)";
+            } else {
+                qEl.style.color = "var(--accent-green)";
+            }
+        } else {
+            alert("Maximum questions reached! The student must guess the identity!");
+        }
+    }
+
+    function useGuess() {
+        if (guessesLeft > 0) {
+            guessesLeft--;
+            const gEl = document.getElementById('guessCount');
+            gEl.innerText = guessesLeft;
+            triggerPulse('guessCount');
+
+            if (guessesLeft === 1) {
+                gEl.style.color = "var(--accent-red)";
+            }
+            if (guessesLeft === 0) {
+                alert("Game Over! All 3 guess attempts used.");
+            }
+        }
+    }
+
+    function togglePrivacy() {
+        isBlindActive = !isBlindActive;
+        document.getElementById('audienceView').style.display = isBlindActive ? 'none' : 'block';
+        document.getElementById('blindView').style.display = isBlindActive ? 'block' : 'none';
+    }
+
+    function restartTimer() {
+        clearInterval(timerInterval);
+        timerSeconds = 600;
+        updateTimerDisplay();
+        triggerPulse('timer');
+
+        const timerEl = document.getElementById('timer');
+        timerEl.style.color = "var(--accent-cyan)";
+
+        timerInterval = setInterval(() => {
+            if (timerSeconds > 0) {
+                timerSeconds--;
+                updateTimerDisplay();
+                if (timerSeconds <= 30) {
+                    timerEl.style.color = "var(--accent-red)";
+                }
+            } else {
+                clearInterval(timerInterval);
+                timerEl.style.color = "var(--accent-red)";
+            }
+        }, 1000);
+    }
+
+    function updateTimerDisplay() {
+        const mins = String(Math.floor(timerSeconds / 60)).padStart(2, '0');
+        const secs = String(timerSeconds % 60).padStart(2, '0');
+        document.getElementById('timer').innerText = `${mins}:${secs}`;
+    }
+
+    window.onload = initGame;
+</script>
+
+</body>
+</html>

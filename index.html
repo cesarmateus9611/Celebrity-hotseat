@@ -379,6 +379,7 @@
 
 <script>
     const celebrityDatabase = [
+        // ── TECHNOLOGY & COMPUTING PIONEERS ──
         {
             name: "Ada Lovelace",
             field: "Computing Pioneer / Mathematics",
@@ -393,7 +394,7 @@
             name: "Alan Turing",
             field: "Computer Science / Cryptography",
             clues: [
-                { title: "Era & Century", desc: "He was alive during the 20th century (World War II)." },
+                { title: "Era & Century", desc: "He was alive during the 20th century (World War II era)." },
                 { title: "Nationality", desc: "He was British." },
                 { title: "Profession", desc: "He was a mathematician, logician, and cryptanalyst." },
                 { title: "Key Claim", desc: "His machine was key to breaking the Enigma code." }
@@ -401,11 +402,11 @@
         },
         {
             name: "Steve Jobs",
-            field: "Tech Entrepreneurship",
+            field: "Tech Entrepreneurship / Design",
             clues: [
                 { title: "Era & Century", desc: "He was alive in the late 20th and early 21st century." },
                 { title: "Nationality", desc: "He was American (from California)." },
-                { title: "Profession", desc: "He was a tech executive, designer, and inventor." },
+                { title: "Profession", desc: "He was a tech executive, designer, and visionary." },
                 { title: "Key Claim", desc: "He was the co-founder and iconic CEO of Apple." }
             ]
         },
@@ -420,23 +421,77 @@
             ]
         },
         {
+            name: "Grace Hopper",
+            field: "Computer Science / US Navy",
+            clues: [
+                { title: "Era & Century", desc: "She was active throughout the mid-to-late 20th century." },
+                { title: "Nationality", desc: "She was American." },
+                { title: "Profession", desc: "She was a naval rear admiral and computer scientist." },
+                { title: "Key Claim", desc: "She was the creator of the first computer compiler." }
+            ]
+        },
+
+        // ── SCIENCE & MEDICINE ──
+        {
             name: "Albert Einstein",
             field: "Theoretical Physics",
             clues: [
                 { title: "Era & Century", desc: "He was alive during the 20th century." },
-                { title: "Nationality", desc: "He was German-born (later American)." },
+                { title: "Nationality", desc: "He was German-born (later Swiss and American)." },
                 { title: "Profession", desc: "He was a theoretical physicist." },
                 { title: "Key Claim", desc: "His most famous work was the Theory of Relativity." }
             ]
         },
         {
             name: "Marie Curie",
-            field: "Chemistry & Physics",
+            field: "Physics & Chemistry",
             clues: [
                 { title: "Era & Century", desc: "She was active in the late 19th and early 20th century." },
                 { title: "Nationality", desc: "She was Polish and French." },
-                { title: "Profession", desc: "She was a scientist (physicist and chemist)." },
-                { title: "Key Claim", desc: "She was the first woman to win a Nobel Prize (she had two)." }
+                { title: "Profession", desc: "She was a pioneer physicist and chemist." },
+                { title: "Key Claim", desc: "She was the first person to win two Nobel Prizes." }
+            ]
+        },
+        {
+            name: "Isaac Newton",
+            field: "Physics & Mathematics",
+            clues: [
+                { title: "Era & Century", desc: "He was alive in the 17th and early 18th century." },
+                { title: "Nationality", desc: "He was English." },
+                { title: "Profession", desc: "He was a mathematician, physicist, and astronomer." },
+                { title: "Key Claim", desc: "His discoveries were the laws of motion and universal gravitation." }
+            ]
+        },
+        {
+            name: "Stephen Hawking",
+            field: "Theoretical Physics & Cosmology",
+            clues: [
+                { title: "Era & Century", desc: "He was alive in the late 20th and early 21st century." },
+                { title: "Nationality", desc: "He was British." },
+                { title: "Profession", desc: "He was a theoretical physicist and cosmologist." },
+                { title: "Key Claim", desc: "His work was about black holes and general relativity." }
+            ]
+        },
+        {
+            name: "Charles Darwin",
+            field: "Natural History & Biology",
+            clues: [
+                { title: "Era & Century", desc: "He was active in the 19th century." },
+                { title: "Nationality", desc: "He was British." },
+                { title: "Profession", desc: "He was a naturalist and geologist." },
+                { title: "Key Claim", desc: "His theory was the evolution of species by natural selection." }
+            ]
+        },
+
+        // ── ART & LITERATURE ──
+        {
+            name: "Leonardo da Vinci",
+            field: "Renaissance Art & Engineering",
+            clues: [
+                { title: "Era & Century", desc: "He was active during the Italian Renaissance (15th–16th century)." },
+                { title: "Nationality", desc: "He was Italian (from Florence)." },
+                { title: "Profession", desc: "He was a painter, inventor, and polymath." },
+                { title: "Key Claim", desc: "His most famous masterpiece was the Mona Lisa." }
             ]
         },
         {
@@ -444,39 +499,195 @@
             field: "Visual Arts / Painting",
             clues: [
                 { title: "Era & Century", desc: "She was alive in the 20th century (1907–1954)." },
-                { title: "Nationality", desc: "She was Mexican (from Coyoacán, Mexico City)." },
+                { title: "Nationality", desc: "She was Mexican (from Coyoacán)." },
                 { title: "Profession", desc: "She was a painter and cultural icon." },
-                { title: "Key Claim", desc: "Her famous artworks were surreal self-portraits." }
+                { title: "Key Claim", desc: "Her famous artworks were colorful, surreal self-portraits." }
             ]
         },
         {
-            name: "Freddie Mercury",
-            field: "Music / Rock Legend",
+            name: "Vincent van Gogh",
+            field: "Post-Impressionist Art",
             clues: [
-                { title: "Era & Century", desc: "He was active in the 1970s and 1980s." },
-                { title: "Nationality", desc: "He was British (born in Zanzibar)." },
-                { title: "Profession", desc: "He was a singer, songwriter, and pianist." },
-                { title: "Key Claim", desc: "He was the legendary lead singer of Queen." }
+                { title: "Era & Century", desc: "He was active in the late 19th century." },
+                { title: "Nationality", desc: "He was Dutch." },
+                { title: "Profession", desc: "He was a painter." },
+                { title: "Key Claim", desc: "His most iconic painting was The Starry Night." }
             ]
         },
         {
-            name: "Pelé",
-            field: "World Sports / Football",
+            name: "William Shakespeare",
+            field: "Literature & Theatre",
             clues: [
-                { title: "Era & Century", desc: "He was active from 1956 through the 1970s." },
-                { title: "Nationality", desc: "He was Brazilian." },
-                { title: "Profession", desc: "He was a professional soccer player." },
-                { title: "Key Claim", desc: "He was a 3-time FIFA World Cup champion (shirt #10)." }
+                { title: "Era & Century", desc: "He was active in the late 16th and early 17th century." },
+                { title: "Nationality", desc: "He was English." },
+                { title: "Profession", desc: "He was a playwright, poet, and actor." },
+                { title: "Key Claim", desc: "His famous plays were Hamlet and Romeo and Juliet." }
             ]
         },
+        {
+            name: "Gabriel García Márquez",
+            field: "Literature / Journalism",
+            clues: [
+                { title: "Era & Century", desc: "He was alive in the 20th and early 21st century (1927–2014)." },
+                { title: "Nationality", desc: "He was Colombian (from Aracataca)." },
+                { title: "Profession", desc: "He was a novelist, journalist, and Nobel Laureate." },
+                { title: "Key Claim", desc: "His masterpiece was One Hundred Years of Solitude." }
+            ]
+        },
+
+        // ── WORLD HISTORY & LEADERSHIP ──
         {
             name: "Cleopatra",
             field: "Ancient World History",
             clues: [
                 { title: "Era & Century", desc: "She was alive in the 1st century BC (Ancient era)." },
                 { title: "Geography", desc: "Her kingdom was Egypt (Alexandria)." },
-                { title: "Profession", desc: "She was the queen and ruler of the Ptolemaic Kingdom." },
-                { title: "Key Claim", desc: "Her allies were Julius Caesar and Mark Antony." }
+                { title: "Profession", desc: "She was the queen and last active ruler of Ptolemaic Egypt." },
+                { title: "Key Claim", desc: "Her political allies were Julius Caesar and Mark Antony." }
+            ]
+        },
+        {
+            name: "Julius Caesar",
+            field: "Ancient Roman History",
+            clues: [
+                { title: "Era & Century", desc: "He was alive in the 1st century BC." },
+                { title: "Geography", desc: "His home was Rome, Italy." },
+                { title: "Profession", desc: "He was a general, politician, and Roman dictator." },
+                { title: "Key Claim", desc: "His death was an assassination on the Ides of March." }
+            ]
+        },
+        {
+            name: "Nelson Mandela",
+            field: "Civil Rights & Politics",
+            clues: [
+                { title: "Era & Century", desc: "He was active in the 20th and early 21st century." },
+                { title: "Nationality", desc: "He was South African." },
+                { title: "Profession", desc: "He was an anti-apartheid revolutionary and president." },
+                { title: "Key Claim", desc: "He was a political prisoner for 27 years before his presidency." }
+            ]
+        },
+        {
+            name: "Mahatma Gandhi",
+            field: "Civil Rights & Peace",
+            clues: [
+                { title: "Era & Century", desc: "He was alive in the late 19th and early 20th century." },
+                { title: "Nationality", desc: "He was Indian." },
+                { title: "Profession", desc: "He was a lawyer, politician, and activist." },
+                { title: "Key Claim", desc: "His philosophy was nonviolent civil disobedience." }
+            ]
+        },
+        {
+            name: "Alexander the Great",
+            field: "Ancient Military History",
+            clues: [
+                { title: "Era & Century", desc: "He was alive in the 4th century BC." },
+                { title: "Geography", desc: "His kingdom was Macedonia (Ancient Greece)." },
+                { title: "Profession", desc: "He was a king and military commander." },
+                { title: "Key Claim", desc: "His empire was one of the largest in ancient history." }
+            ]
+        },
+
+        // ── MUSIC & ENTERTAINMENT ──
+        {
+            name: "Michael Jackson",
+            field: "Pop Music & Dance",
+            clues: [
+                { title: "Era & Century", desc: "He was active in the late 20th and early 21st century." },
+                { title: "Nationality", desc: "He was American." },
+                { title: "Profession", desc: "He was a singer, songwriter, and dancer." },
+                { title: "Key Claim", desc: "He was known worldwide as the 'King of Pop'." }
+            ]
+        },
+        {
+            name: "Freddie Mercury",
+            field: "Rock Music Legend",
+            clues: [
+                { title: "Era & Century", desc: "He was active in the 1970s and 1980s." },
+                { title: "Nationality", desc: "He was British (born in Zanzibar)." },
+                { title: "Profession", desc: "He was a singer, songwriter, and pianist." },
+                { title: "Key Claim", desc: "He was the flamboyant lead vocalist of Queen." }
+            ]
+        },
+        {
+            name: "Bob Marley",
+            field: "Reggae Music & Culture",
+            clues: [
+                { title: "Era & Century", desc: "He was active in the 1960s and 1970s." },
+                { title: "Nationality", desc: "He was Jamaican." },
+                { title: "Profession", desc: "He was a reggae singer, songwriter, and guitarist." },
+                { title: "Key Claim", desc: "His songs were global anthems for peace and unity." }
+            ]
+        },
+        {
+            name: "Elvis Presley",
+            field: "Rock and Roll Music",
+            clues: [
+                { title: "Era & Century", desc: "He was active in the 1950s, 60s, and 70s." },
+                { title: "Nationality", desc: "He was American (from Mississippi/Tennessee)." },
+                { title: "Profession", desc: "He was a singer and actor." },
+                { title: "Key Claim", desc: "He was celebrated as the 'King of Rock and Roll'." }
+            ]
+        },
+        {
+            name: "Marilyn Monroe",
+            field: "Cinema & Hollywood",
+            clues: [
+                { title: "Era & Century", desc: "She was active in the 1950s and early 1960s." },
+                { title: "Nationality", desc: "She was American (from Los Angeles)." },
+                { title: "Profession", desc: "She was an actress, model, and singer." },
+                { title: "Key Claim", desc: "She was one of the most famous Hollywood icons of the 20th century." }
+            ]
+        },
+
+        // ── SPORTS ICONS ──
+        {
+            name: "Pelé",
+            field: "World Sports / Football",
+            clues: [
+                { title: "Era & Century", desc: "He was active from 1956 through the 1970s." },
+                { title: "Nationality", desc: "He was Brazilian." },
+                { title: "Profession", desc: "He was a professional football player." },
+                { title: "Key Claim", desc: "He was a three-time FIFA World Cup champion (shirt #10)." }
+            ]
+        },
+        {
+            name: "Diego Maradona",
+            field: "World Sports / Football",
+            clues: [
+                { title: "Era & Century", desc: "He was active from the late 1970s through the 1990s." },
+                { title: "Nationality", desc: "He was Argentine." },
+                { title: "Profession", desc: "He was a professional football player and manager." },
+                { title: "Key Claim", desc: "He was the hero of the 1986 FIFA World Cup in Mexico." }
+            ]
+        },
+        {
+            name: "Kobe Bryant",
+            field: "Basketball / NBA Legend",
+            clues: [
+                { title: "Era & Century", desc: "He was active from 1996 to 2016." },
+                { title: "Nationality", desc: "He was American." },
+                { title: "Profession", desc: "He was a professional basketball player for the LA Lakers." },
+                { title: "Key Claim", desc: "He was a 5-time NBA champion, known as the 'Black Mamba'." }
+            ]
+        },
+        {
+            name: "Muhammad Ali",
+            field: "Boxing / Cultural Icon",
+            clues: [
+                { title: "Era & Century", desc: "He was active in the 1960s and 1970s." },
+                { title: "Nationality", desc: "He was American." },
+                { title: "Profession", desc: "He was a heavyweight boxer and activist." },
+                { title: "Key Claim", desc: "He was known worldwide as 'The Greatest'." }
+            ]
+        },
+        {
+            name: "Ayrton Senna",
+            field: "Motorsport / Formula 1",
+            clues: [
+                { title: "Era & Century", desc: "He was active in the 1980s and early 1990s." },
+                { title: "Nationality", desc: "He was Brazilian." },
+                { title: "Profession", desc: "He was a Formula 1 racing driver." },
+                { title: "Key Claim", desc: "He was a 3-time Formula 1 World Champion." }
             ]
         }
     ];
